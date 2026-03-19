@@ -1,10 +1,8 @@
----
-
 # 실행 가이드
 
----
+- Enter after clone
 
-```bash
+```
 
 pip install -r requirement.txt
 
