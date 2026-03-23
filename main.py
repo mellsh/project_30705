@@ -1,23 +1,7 @@
-from fastapi import FastAPI, Depends, Path, HTTPException
-from pydantic import BaseModel
-from Database.database import engineconn
-from Database.models import UserInfo
+from fastapi import FastAPI
+from routes import userAuthor   # 👈 이거 중요
 
 app = FastAPI()
 
-engine = engineconn()
-session = engine.sessionmaker()
+app.include_router(userAuthor.router, prefix="/user")
 
-
-class Item(BaseModel):
-    user_id : int
-    name : str
-    age : int
-    mainrole : str
-    participation : int
-    descript : str
-
-@app.get("/")
-async def first_get():
-    example = session.query(UserInfo).all()
-    return example
