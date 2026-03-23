@@ -1,10 +1,13 @@
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
 import os
 
+load_dotenv()
+
 USERNAME = os.getenv("DB_USER")
-PASSWORD = os.getenv("DB_PASSWD")
+PASSWORD = quote_plus(os.getenv("DB_PASSWD"))
 HOST = os.getenv("DB_HOST")
 PORT = os.getenv("DB_PORT")
 DBNAME = os.getenv("DB_NAME") 
