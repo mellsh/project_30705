@@ -11,6 +11,7 @@ pip install -r requirement.txt
 - and Enter this code to CMD or TERMINAL
 
 ```
+
 uvicorn main:app --reload
 
 ```
