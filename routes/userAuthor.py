@@ -41,19 +41,24 @@ def login(user: UserLogin):
     hashed_pw = hashlib.sha256(user.password.encode()).hexdigest()
     
     query = text("""
-        select * from userInfo where username = (:username) and password = (:password)
-        """)
+        select user_id, username, name
+        from userInfo 
+        where username = :username and password = :password
+    """)
 
-    try:
-        conn.execute(query, {
+    result = conn.execute(query, {
         "username": user.username,
         "password": hashed_pw,
-    })
-        conn.commit()
-        return {"message": "로그인 성공"}
-    except Exception as e:
-        print(e)  # 👈 이거 추가
-        raise HTTPException(status_code=400, detail=str(e))
+    }).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=400, detail="로그인 실패")
+
+    return {
+        "user_id": result.user_id,
+        "username": result.username,
+        "name": result.name
+    }
 
 @router.delete("/delete/{user_id}")
 def delete_user(user_id: int):
