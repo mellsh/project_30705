@@ -145,3 +145,16 @@ def delete_team(team_id: int):
     conn.commit()
 
     return {"message": "팀 삭제 완료"}
+
+@router.get("/teamname/{team_id}")
+def getname(team_id:int):
+    conn = engine.connection()
+    
+    team = conn.execute(
+        text("SELECT teamname FROM team WHERE team_id = :team_id"),
+        {"team_id": team_id}
+    ).fetchone()
+    
+    conn.commit()
+    print(team)
+    return {"teamname":team[0]}
